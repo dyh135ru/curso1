@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Button, Input, Col, Row } from "antd";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Button, Input, Col, Row, DatePicker } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Name from "./components/Name";
 import Age from "./components/Age";
@@ -11,6 +12,23 @@ function App() {
   const [names, setNames] = useState([]);
   const [name, setName] = useState("");
   const [index, setIndex] = useState(null);
+  const [date, setDate] = useState("");
+
+  function onChangeDate(date, dateString) {
+    setDate(dateString);
+  }
+
+  function getNames() {
+    axios.get("http://localhost:3001/students").then((response) => {
+      setNames(response.data);
+    });
+  }
+
+  useEffect(() => {
+    if (!names.length) {
+      getNames();
+    }
+  });
 
   function addName() {
     /* if (name !== "" && names.indexOf(name) === -1) {
@@ -18,10 +36,19 @@ function App() {
       setNames(newNames);
       setName("");
     } */
+
     if (index === null) {
-      const newNames = [name, ...names];
+      axios
+        .post("http://localhost:3001/students", {
+          name: name,
+          dob: date,
+        })
+        .then((response) => {
+          getNames();
+        });
+      /* const newNames = [name, ...names];
       setNames(newNames);
-      setName("");
+      setName(""); */
     } else {
       names[index] = name;
       setNames([...names]);
@@ -29,6 +56,7 @@ function App() {
       setName("");
     }
   }
+
   function removeName(name) {
     //                 ['1', '2'], ('2') !== '' //Va a buscar elemento por elemento y el coincida lo va a dejar fuera en el filtro
     const newNames = names.filter((n) => n !== name);
@@ -44,9 +72,6 @@ function App() {
     setName(names[index]);
   }
 
-  function onChange(a, b, c) {
-    console.log(a, b, c);
-  }
   return (
     <div className="App">
       <Row justify="center" gutter={10}>
@@ -58,6 +83,9 @@ function App() {
             }}
             placeholder="Ingrese un nombre"
           />
+        </Col>
+        <Col>
+          <DatePicker onChange={onChangeDate} />
         </Col>
         <Col>
           <Button onClick={() => addName()} type="primary">

@@ -11,7 +11,9 @@ export default (props) => {
       dataSource={props.data}
       renderItem={(item) => (
         <List.Item>
-          <Typography.Text>{item}</Typography.Text>
+          <Typography.Text>{item.id}</Typography.Text>
+          <Typography.Text>{item.name}</Typography.Text>
+          <Typography.Text>{item.dob}</Typography.Text>
           <EditOutlined
             style={{ color: "blue" }}
             onClick={() => props.editName(item)}

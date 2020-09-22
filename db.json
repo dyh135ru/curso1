@@ -1,3 +1,24 @@
 {
-  "students": [{ "id": "1", "name": "Ernesto Cedano", "dob": "26/10/1996" }]
+  "students": [
+    {
+      "id": "1",
+      "name": "Ernesto Cedano",
+      "dob": "1996/26/10"
+    },
+    {
+      "name": "Dylan Ruiz",
+      "id": "VJJBRMx",
+      "dob": "1999/10/01"
+    },
+    {
+      "name": "Pedro",
+      "dob": "2020-09-01",
+      "id": "BdqCwZU"
+    },
+    {
+      "name": "da",
+      "dob": "2020-09-01",
+      "id": "MR07BAX"
+    }
+  ]
 }
