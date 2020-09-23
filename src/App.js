@@ -5,6 +5,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import Name from "./components/Name";
 import Age from "./components/Age";
 import List from "./components/List";
+import moment from "moment";
 
 import "./App.css";
 
@@ -12,7 +13,7 @@ function App() {
   const [names, setNames] = useState([]);
   const [name, setName] = useState("");
   const [index, setIndex] = useState(null);
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
 
   function onChangeDate(date, dateString) {
     setDate(dateString);
@@ -37,7 +38,7 @@ function App() {
       setName("");
     } */
 
-    if (index === null) {
+    if (index === null && name !== "") {
       axios
         .post("http://localhost:3001/students", {
           name: name,
@@ -46,9 +47,22 @@ function App() {
         .then((response) => {
           getNames();
         });
+      setName("");
+      setDate(new Date());
       /* const newNames = [name, ...names];
       setNames(newNames);
       setName(""); */
+    } else if (index !== null && name !== "") {
+      axios
+        .put("http://localhost:3001/students/" + index, {
+          name: name,
+          dob: date,
+        })
+        .then((response) => {
+          getNames();
+        });
+      setName("");
+      setDate(new Date());
     } else {
       names[index] = name;
       setNames([...names]);
@@ -65,11 +79,14 @@ function App() {
 
   function editName(name) {
     //Index 0,1 ['Ernesto' , 'Cedano']
-    const index = names.indexOf(name);
+    //const index = names.indexOf(name);
+    const index = name.id;
     //Guardar index = en el estadp
     setIndex(index);
     //names[index] names[1]
-    setName(names[index]);
+    //setName(names[index]);
+    setName(name.name);
+    setDate(name.dob);
   }
 
   return (
@@ -85,7 +102,11 @@ function App() {
           />
         </Col>
         <Col>
-          <DatePicker onChange={onChangeDate} />
+          <DatePicker
+            value={moment(date)}
+            allowClear={false}
+            onChange={onChangeDate}
+          />
         </Col>
         <Col>
           <Button onClick={() => addName()} type="primary">

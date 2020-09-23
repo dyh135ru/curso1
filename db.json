@@ -3,12 +3,12 @@
     {
       "id": "1",
       "name": "Ernesto Cedano",
-      "dob": "1996/26/10"
+      "dob": "1996-10-26"
     },
     {
       "name": "Dylan Ruiz",
-      "id": "VJJBRMx",
-      "dob": "1999/10/01"
+      "dob": "1999-10-01",
+      "id": "VJJBRMx"
     },
     {
       "name": "Pedro",
@@ -16,9 +16,14 @@
       "id": "BdqCwZU"
     },
     {
-      "name": "da",
-      "dob": "2020-09-01",
-      "id": "MR07BAX"
+      "name": "Bianca",
+      "dob": "1992-08-15",
+      "id": "oqhJcjB"
+    },
+    {
+      "name": "Sandra",
+      "dob": "1993-08-27",
+      "id": "z-wang2"
     }
   ]
 }
